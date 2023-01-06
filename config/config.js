@@ -1,26 +1,26 @@
-{
+export default {
   "development": {
-    "username": "book_owner",
+    "username": "google-form-admin",
     "password": "password",
-    "database": "bookdb",
+    "database": "google-form",
     "host": "127.0.0.1",
-    "port": "5431",
+    "port": "5432",
     "dialect": "postgres"
   },
   "test": {
-    "username": "book_owner",
+    "username": "google-form-admin",
     "password": "password",
-    "database": "bookdb",
+    "database": "google-form",
     "host": "127.0.0.1",
-    "port": "5431",
+    "port": "5432",
     "dialect": "postgres"
   },
   "production": {
-    "username": "book_owner",
+    "username": "google-form-admin",
     "password": "password",
-    "database": "bookdb",
+    "database": "google-form",
     "host": "127.0.0.1",
-    "port": "5431",
+    "port": "5432",
     "dialect": "postgres"
   }
 }
