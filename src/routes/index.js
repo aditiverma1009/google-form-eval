@@ -1,4 +1,6 @@
+import formsRouter from './forms.js';
 import healthCheckRouter from './healthcheck.js';
+import responsesRouter from './responses.js';
 
 const router = (app) => {
   // common middleware time logger
@@ -7,6 +9,9 @@ const router = (app) => {
   });
 
   app.use(healthCheckRouter);
+  app.use(formsRouter)
+  app.use(responsesRouter)
+
 };
 
 export default router;
