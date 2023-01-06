@@ -1,5 +1,7 @@
+import { text } from 'express';
 import { Router } from 'express';
 import Model from "../db/models/index.js";
+import { body } from "express-validator";
 
 const responsesRouter = Router();
 
@@ -37,21 +39,36 @@ responsesRouter.get('/form/:id/responses', async (request, response) => {
   }
 });
 
-responsesRouter.post('/form/responses', async (request, response) => {
-  try {
-    const formId = parseInt(request.body.formId);
-    const responses = request.body.responses.map((eachResponse) => {
-      return {
-        form_id: formId,
-        question_id: eachResponse.questionId,
-        response: eachResponse.response
-      }
-    })
-    await Model.Responses.bulkCreate(responses)
-    response.status(200).send('Response successfully saved');
-  } catch (err) {
-    response.status(500).send(err);
-  }
-});
+responsesRouter.post('/form/responses',
+  // body('responses').custom((allResponses) => {
+  //   allResponses.forEach(async (eachRes) => {
+  //     let question = await Model.Questions.findOne({
+  //       where: {
+  //         form_id: eachRes.form_id,
+  //         id: eachRes.question_id
+  //       }
+  //     })
+  //     if (question.dataValues.type === 'shortans') {
+  //       if (text.length > 150) return Promise.reject(`length is too long`);
+  //     }
+  //   })
+  //   return true;
+  // })
+  async (request, response) => {
+    try {
+      const formId = parseInt(request.body.formId);
+      const responses = request.body.responses.map((eachResponse) => {
+        return {
+          form_id: formId,
+          question_id: eachResponse.questionId,
+          response: eachResponse.response
+        }
+      })
+      await Model.Responses.bulkCreate(responses)
+      response.status(200).send('Response successfully saved');
+    } catch (err) {
+      response.status(500).send(err);
+    }
+  });
 
 export default responsesRouter;

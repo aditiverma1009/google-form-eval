@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { body } from 'express-validator';
 import Model from "../db/models/index.js";
 
 const formsRouter = Router();
@@ -34,27 +35,29 @@ formsRouter.get('/form/:id', async (request, response) => {
   }
 });
 
-formsRouter.post('/form', async (request, response) => {
-  try {
-    const formBody = {
-      title: request.body.title,
-      questions: request.body.questions
-    }
-    let newForm = await Model.Forms.create({
-      title: formBody.title,
-    })
-    await Model.Questions.bulkCreate(formBody.questions.map((eachQuestion) => {
-      return {
-        form_id: newForm.id,
-        text: eachQuestion.text,
-        type: eachQuestion.type,
-        is_required: eachQuestion.isRequired
+formsRouter.post('/form',
+  body('title').not().isEmpty(),
+  async (request, response) => {
+    try {
+      const formBody = {
+        title: request.body.title,
+        questions: request.body.questions
       }
-    }))
-    response.status(200).send('Form successfully created');
-  } catch (err) {
-    response.status(500).send(`Something went wrong`);
-  }
-});
+      let newForm = await Model.Forms.create({
+        title: formBody.title,
+      })
+      await Model.Questions.bulkCreate(formBody.questions.map((eachQuestion) => {
+        return {
+          form_id: newForm.id,
+          text: eachQuestion.text,
+          type: eachQuestion.type,
+          is_required: eachQuestion.isRequired
+        }
+      }))
+      response.status(200).send('Form successfully created');
+    } catch (err) {
+      response.status(500).send(`Something went wrong`);
+    }
+  });
 
 export default formsRouter;
