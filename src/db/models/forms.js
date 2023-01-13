@@ -8,7 +8,10 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Forms.hasMany(models.Questions, {
+      Forms.hasMany(models.Questions, {
+        foreignKey: 'form_id'
+      });
+      Forms.hasMany(models.Responses, {
         foreignKey: 'form_id'
       });
     }

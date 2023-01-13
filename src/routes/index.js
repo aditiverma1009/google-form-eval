@@ -1,4 +1,4 @@
-import formsRouter from '../../tests/controllers/forms.js';
+import formsRouter from './forms.js';
 import healthCheckRouter from './healthcheck.js';
 import responsesRouter from './responses.js';
 
@@ -11,7 +11,6 @@ const router = (app) => {
   app.use(healthCheckRouter);
   app.use(formsRouter)
   app.use(responsesRouter)
-
 };
 
 export default router;

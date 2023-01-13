@@ -4,7 +4,11 @@ import forms from './forms.js';
 export default (sequelize, DataTypes) => {
   class Questions extends Model {
     static associate(models) {
-      models.Questions.hasMany(models.Responses, {
+      Questions.belongsTo(models.Forms, {
+        foreignKey: 'form_id',
+        targetKey: 'id',
+      });
+      Questions.hasMany(models.Responses, {
         foreignKey: 'question_id'
       });
     }
@@ -17,10 +21,13 @@ export default (sequelize, DataTypes) => {
         model: 'forms',
         key: 'id',
       },
-      unique: 'compositeIndexQues'
     },
-    text: { type: DataTypes.STRING, allowNull: false, unique: 'compositeIndexQues' },
-    type: { type: DataTypes.STRING, allowNull: false },
+    text: { type: DataTypes.STRING, allowNull: false },
+    type: {
+      type: DataTypes.ENUM,
+      values: ['DATE', 'SHORTANS', 'LONGANS', 'NUMBER'],
+      allowNull: false
+    },
     is_required: { type: DataTypes.BOOLEAN, defaultValue: false }
   }, {
     sequelize,
