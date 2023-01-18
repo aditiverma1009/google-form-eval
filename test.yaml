@@ -1,0 +1,9 @@
+name: Aditi
+age: 39
+address: "2/159"
+active: true
+subjects: 
+  math: 0
+  physics:
+    key: 1
+    key2: 0

@@ -15,7 +15,6 @@ formsRouter.get('/forms', async (_, response) => {
 
 formsRouter.get('/form/:id', async (request, response) => {
   let form;
-
   try {
     const formId = parseInt(request.params.id);
     form = await Model.Forms.findOne({
